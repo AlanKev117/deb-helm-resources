@@ -1,0 +1,69 @@
+images:
+  airflow:
+    repository: your-repo/your-airflow-image # Your Docker Hub repo and image name
+    tag: 0.0.1 # The tag you chose when building the Dockerfile
+
+logs:
+  persistence:
+    # Enable persistent volume for storing logs
+    enabled: true
+    # Volume size for logs
+    size: 1Gi
+    # If using a custom storageClass, pass name here
+    storageClassName: nfs-client
+
+
+# Safe env vars.
+# Those starting with AIRFLOW_CONN_ will be parsed as Airflow connections
+#   https://airflow.apache.org/docs/apache-airflow/stable/howto/connection.html
+# Those starting with AIRFLOW_VAR_ will be parsed as Airflow variables
+#   https://airflow.apache.org/docs/apache-airflow/stable/howto/variable.html
+secret:
+  # Connections
+  - envName: "AIRFLOW_CONN_AWS_DEFAULT"
+    secretName: af-connections
+    secretKey: aws
+  - envName: "AIRFLOW_CONN_POSTGRES_DEFAULT"
+    secretName: af-connections
+    secretKey: postgres
+  # Airflow Variables
+  - envName: "AIRFLOW_VAR_BUCKET"
+    secretName: af-variables
+    secretKey: bucket
+  - envName: "AIRFLOW_VAR_LOGREV_KEY"
+    secretName: af-variables
+    secretKey: logrev_key
+  - envName: "AIRFLOW_VAR_MOVREV_KEY"
+    secretName: af-variables
+    secretKey: movrev_key
+  - envName: "AIRFLOW_VAR_USRPUR_KEY"
+    secretName: af-variables
+    secretKey: usrpur_key
+  - envName: "AIRFLOW_VAR_USRPUR_TABLE"
+    secretName: af-variables
+    secretKey: usrpur_table
+  - envName: "AIRFLOW_VAR_USRPUR_SCHEMA"
+    secretName: af-variables
+    secretKey: usrpur_schema
+  - envName: "AIRFLOW_VAR_USRPUR_QUERY"
+    secretName: af-variables
+    secretKey: usrpur_query
+  - envName: "AIRFLOW_VAR_GLUEJOB"
+    secretName: af-variables
+    secretKey: gluejob
+  - envName: "AIRFLOW_VAR_GLUE_SCRIPT_LOCATION"
+    secretName: af-variables
+    secretKey: glue_script_location
+  - envName: "AIRFLOW_VAR_REGION"
+    secretName: af-variables
+    secretKey: region
+  - envName: "AIRFLOW_VAR_ATHDB"
+    secretName: af-variables
+    secretKey: athdb
+  - envName: "AIRFLOW_VAR_ATHBUCKET"
+    secretName: af-variables
+    secretKey: athbucket
+  # Env variables
+  - envName: "AWS_DEFAULT_REGION"
+    secretName: af-variables
+    secretKey: region
